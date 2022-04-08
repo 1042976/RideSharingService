@@ -1,0 +1,22 @@
+1. The ride sharer would take a ride that it’s not what they expected if the ride owner changes the destination address or the required arrival time after the sharer had joined the ride. 
+My solution is that once the ride owner changes the destination address or the required arrival time, the system would automatically kick all the current sharers in this ride out and then wait for new sharers to join in if the ride owner still gets to share the ride with other people.
+
+2. The user can still click the ‘edit’, ‘delete’, ‘join’, ‘drop’ buttons even if the ride has been confirmed by the driver since the owners/sharers page cannot be refresh automatically to update . 
+Solution: Once the ride has been confirmed by the driver, the owners/ sharers search pages do not automatically refresh to update the information. Thus, owners thought they can still edit the ride's information. In order to avoid this conflict, once owners click buttons, like ‘edit’, ‘delete’ , ‘join’ and ‘drop’, those buttons would refresh the pages with driver confirmation. Thus, we make sure once the driver confirm the ride, owners/sharers cannot edit the request any more. 
+
+3. When the user is filling the form, they may enter some information with incorrect format. The system may prompt them with confusing messages which do not exactly show where is wrong.
+Solution: try to test all kinds of incorrect input and see if the messages helpful or not.
+
+4. The user can register a new account without any validation to email. This would cause two kinds of danger. First, the user would not receive any email when they order a ride because the email to use the register the account is incorrect. Second, the user may enter the email that is not belong to them, making other people receive junk email.
+
+5. When the user search for an open ride and get a list of search results but are hesitating to join which of it, the ride owner may update their ride information at that moment such that the destination of owners is not the destination of sharers. Then the sharer may join a ride that are actually not what they are looking for.
+Thoughts: After sharers click "join" button, the page will pop out a second confirmation page with owner_updated ride information, which will give the sharers 10 seconds to consider to join. During the 10s, owners are not allowed to edit the ride. This will make sure when owners edit the trip, sharers will see the update information before joining and then decide to join.
+
+6. When the owner delete the trip, since the driver page does not refresh automatically, the server return an error page with query not exist in the database. 
+Solution: before the driver confirm, we need to check if the ride request exists in the database. If not, we show a message on driver page to tell the driver that the owner already cancel the trip. Thus, we handle this situation.
+
+
+
+
+
+

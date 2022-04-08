@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Information View</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container" style="margin-top: 50px">
+    <h1 style="text-align:center">Driver Site Page</h1>
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <br/>
+
+    {% if info == None %}
+    <a href="{% url 'driver_register' pk %}">
+       <button  type="button" class="btn btn-link">New Driver?</button>
+    </a>
+
+    {% endif %}
+    <div>
+    <a href = "{% url 'home' %}"><button type="button" class="btn btn-link">Back Home</button></a>
+
+        <a href="{% url 'driver_home' pk=pk %}" style="float: right"><button type="button" class="btn btn-primary">Update Ride-requests</button></a>
+
+        </div>
+    <h3>Driver Information</h3>
+    <table border="1" class="table">
+  <thead>
+    <tr>
+        <th>License Plate Number</th>
+        <th>Vehicle Type</th>
+        <th>Max Passengers</th>
+        <th>Special Vehicle Information</th>
+        <th>Driver Status</th>
+        <th>Delete</th>
+        <th>Update</th>
+   </tr>
+  </thead>
+  <tbody>
+  <tr>
+      {% if info  %}
+      <td>{{ info.license_number }}</td>
+      <td>{{ info.type }}</td>
+      <td>{{ info.max_passengers}}</td>
+      <td>{{ info.special_info }}</td>
+      <td>{{ info.driver_status }}</td>
+      <td><a href="{% url 'driver_delete' info.driver_user_id %}">Delete</a></td>
+      <td><a href="{% url 'driver_update' info.driver_user_id %}">Update</a></td>
+       {% endif %}
+  </tr>
+
+  </tbody>
+ </table>
+
+    <h3>Open Ride Request</h3>
+    <table border="1" class="table">
+        <thead>
+            <tr>
+                <th>Departure</th>
+                <th>Destination</th>
+                <th>Required Time Arrival</th>
+                <th>View</th>
+                <th>Confirm</th>
+           </tr>
+        </thead>
+        <tbody>
+          {% for i in requests %}
+          <tr>
+              <td>{{ i.departure_address }}</td>
+              <td>{{ i.destination_address }}</td>
+              <td>{{ i.required_time_arrival }}</td>
+              <td><a href="{% url 'driver_ride_detail' i.id  pk %}">Details</a></td>
+              <td><a href="{% url 'driver_ride_confirm' i.id  pk %}">Confirm</a></td>
+              
+
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Confirmed Rides</h3>
+    <table border="1" class="table">
+        <thead>
+            <tr>
+                <th>Departure</th>
+                <th>Destination</th>
+                <th>Required Time Arrival</th>
+                <th>View</th>
+                <th>Confirm</th>
+           </tr>
+        </thead>
+        <tbody>
+          {% for j in all_confirmed_rides %}
+          <tr>
+              <td>{{ j.departure_address }}</td>
+              <td>{{ j.destination_address }}</td>
+              <td>{{ j.required_time_arrival }}</td>
+              <td><a href="{% url 'driver_confirmed_ride_detail' j.id pk %}">Details</a></td>
+              {% if j.ride_status == "CONFIRMED" %}
+              <td><a href="{% url 'driver_ride_complete' j.id pk%}">Complete</a></td>
+              {% else %}
+              <td>COMPLETE</td>
+              {% endif %}
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container" stype="margin-top:200px">
+<h1 style="text-align:center">Sharer Search Page</h1>
+        <h3>Your requirement</h3>
+        <ul>
+            <li>Destination address: {{ destination_address }}</li>
+            <li>Earliest acceptable arrival time: {{ earliest_acceptable_arrival_time }}</li>
+            <li>Latest acceptable arrival time: {{ latest_acceptable_arrival_time }}</li>
+            <li>Number of passengers in your party: {{ num_of_passengers_in_your_party }}</li>
+        </ul>
+
+        <h3>Search result</h3>
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+        <div class="container">
+            {% for ride in sharable_open_rides %}
+                <strong>Ride owner: {{ ride.ride_owner_user.first_name }} {{ ride.ride_owner_user.last_name }}</strong>&ensp;&ensp;
+                <a href="{% url 'join_open_ride' ride.id %}"><button type="button" class="btn btn-primary">Join</button></a>
+                <ul>
+                    <li>Required time arrival: {{ ride.required_time_arrival }}</li>
+                    <li>Departure address: {{ ride.departure_address }}</li>
+                    <li>Destination address: {{ ride.destination_address }}</li>
+                    <li>Number of Ride Owner Party: {{ ride.number_of_ride_owner_party }}</li>
+                    <li>Preferred vehicle type: {{ ride.vehicle_type }}</li>
+                    <li>Share with other people?:
+                        {% if ride.canShare %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"/>
+                            </svg>
+                            {% for share_info in share_info_list %}
+                                {% if share_info.ride_request == ride %}
+                                    <{{ share_info.ride_sharer.ride_sharer_user.first_name }} {{ share_info.ride_sharer.ride_sharer_user.last_name }}>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        {% endif %}
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+
+    <a href="{% url 'search_sharable_ride' %}"><button type="button" class="btn btn-link">Continue to search</button></a>&ensp;&ensp;
+    <a href="{% url 'ride_sharer' %}"><button type="button" class="btn btn-link">Back</button></a>
+</div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    ntegrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html lang="en-us">
+<head>
+<title>Create View</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" stype="margin-top:200px">
+        <h2>User Registration</h2>
+        <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>Username</label>
+          {{ form.username}}
+        </div>
+        <div class="form-group">
+          <label>First Name</label>
+          {{ form.first_name }}
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          {{ form.last_name }}
+        </div>
+
+        <div class="form-group">
+          <label>Email&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+            {{ form.email}}
+        </div>
+        <div class="form-group">
+          <label>Password&ensp;</label>
+            {{ form.password1}}
+        </div>
+          <div class="form-group">
+            <label>Password Confirmation</label>
+            {{ form.password2}}
+          </div>
+            {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+              <div class="alert alert-primary" role="alert">
+                   <strong>{{ error|escape }}</strong>
+              </div>
+                {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+
+
+          <button type="submit" class="btn btn-primary">Submit!</button>
+        </form>
+
+        Already have an account? <a href="{% url 'login' %}">login</a>
+    </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384 JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
